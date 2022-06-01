@@ -26,10 +26,12 @@ public class StreamWordCount {
         // DataStreamSource<String> streamSource = env.socketTextStream("localhost", 6789);
 
         // test2：从kafka读取
+        // https://nightlies.apache.org/flink/flink-docs-master/docs/connectors/datastream/kafka/
         Properties props = new Properties();
         props.setProperty("bootstrap.servers", "bigdata2:9092, bigdata3:9092,bigdata4:9092");
         props.setProperty("group.id", "consumer1");
         props.setProperty("auto.offset.rest", "latest");
+        // FlinkKafkaConsumer is deprecated and will be removed with Flink 1.15, please use KafkaSource instead.
         DataStreamSource<String> kafkaSource = env.addSource(new FlinkKafkaConsumer<>("topic1", new SimpleStringSchema(), props));
 
         // 3、处理数据
